@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+tmp/
+out-tsc/
+.angular/
+
+# Logs and coverage
+npm-debug.log*
+yarn-error.log*
+coverage/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.history/

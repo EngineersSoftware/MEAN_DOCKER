@@ -1,0 +1,48 @@
+version: '3.8' # version de la sintaxis del archivo
+
+services:
+ mongodb:
+  # 1. Base de datos MongoDB
+  image: mongo:7 # imagen de mongo version 7, usamos la imagen oficial directamente
+  container_name: mean-mongo
+  ports:
+    - "27017:27017"
+  volumes:
+    - mongodb_data:/data/db
+  networks:
+    - mean-network
+  
+  # backend Node.js
+ backend:
+    build:
+      context: ./backend
+    container_name: mean-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/mean_docker
+      - PORT=3000
+    depends_on:
+      - mongodb
+    networks:
+      - mean-networks
+
+ frontend:
+  build:
+    context: ./frontend
+  container_name: mean-frontend
+  ports: 
+    - "8080:80"
+  depends_on:
+    - backend
+  networks:
+    - mean-networks
+
+
+networks:
+  mean-networks:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
